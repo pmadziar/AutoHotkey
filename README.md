@@ -1,3 +1,3 @@
-#My AutoHotkey settings
+# My AutoHotkey settings
 
-VHD: [https://github.com/FuPeiJiang/VD.ahk/tree/]
+VHD: (https://github.com/FuPeiJiang/VD.ahk/tree/)
