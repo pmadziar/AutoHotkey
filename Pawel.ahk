@@ -22,7 +22,6 @@ SetControlDelay -1
 CoordMode "ToolTip", "Screen"
 
 localappdata := EnvGet("LOCALAPPDATA")
-computername := EnvGet("COMPUTERNAME")
 
 ^#c:: Run ('"' localappdata "\Programs\Microsoft VS Code\Code.exe" '"')
 ^#v:: Run ("C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\devenv.exe")
@@ -45,9 +44,8 @@ displayDesktopInfo() {
     count := VD.getCount()
     current := VD.getCurrentDesktopNum()
     msg := "Desktop: " current " / " count
-    MonitorGet A_Index, &L, &T, &R, &B
-    ToolTip msg, R - 250, B - 150
-    SetTimer () => ToolTip(), -1200
+    ToolTip msg, A_ScreenWidth - 250, A_ScreenHeight - 150
+    SetTimer () => ToolTip(), -2300
 }
 
 closeDesktopsToTheRight() {
@@ -64,7 +62,8 @@ closeDesktopsToTheRight() {
 
 ^#t::
 {
-    Run('"' localappdata "\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe" '"')
+    termpath := '"' . localappdata . "\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe" . '"'
+    Run termpath, , "Max"
 }
 
 ;#useful stuff
