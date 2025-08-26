@@ -19,7 +19,10 @@ SetControlDelay -1
 
 ;#SETUP END
 
+CoordMode "ToolTip", "Screen"
+
 localappdata := EnvGet("LOCALAPPDATA")
+computername := EnvGet("COMPUTERNAME")
 
 ^#c:: Run ('"' localappdata "\Programs\Microsoft VS Code\Code.exe" '"')
 ^#v:: Run ("C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\devenv.exe")
@@ -35,6 +38,16 @@ goToDesktopNumCreateIfNotExists(num) {
         }
         VD.goToDesktopNum(num)
     }
+    displayDesktopInfo()
+}
+
+displayDesktopInfo() {
+    count := VD.getCount()
+    current := VD.getCurrentDesktopNum()
+    msg := "Desktop: " current " / " count
+    MonitorGet A_Index, &L, &T, &R, &B
+    ToolTip msg, R - 250, B - 150
+    SetTimer () => ToolTip(), -1200
 }
 
 closeDesktopsToTheRight() {
@@ -69,8 +82,14 @@ closeDesktopsToTheRight() {
 ^#0:: closeDesktopsToTheRight()
 
 ; wrapping / cycle back to first desktop when at the last
-^#left:: VD.goToRelativeDesktopNum(-1)
-^#right:: VD.goToRelativeDesktopNum(+1)
+^#left:: {
+    VD.goToRelativeDesktopNum(-1)
+    displayDesktopInfo()
+}
+^#right:: {
+    VD.goToRelativeDesktopNum(+1)
+    displayDesktopInfo()
+}
 
 +#left:: VD.MoveWindowToRelativeDesktopNum("A", -1).follow()
 +#right:: VD.MoveWindowToRelativeDesktopNum("A", 1).follow()
