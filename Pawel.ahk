@@ -25,6 +25,7 @@ localappdata := EnvGet("LOCALAPPDATA")
 
 ^#c:: Run ('"' localappdata "\Programs\Microsoft VS Code\Code.exe" '"')
 ^#v:: Run ("C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\IDE\devenv.exe")
+; ^#p:: Run ("C:\Program Files\PowerShell\7\pwsh.exe -ExecutionPolicy Bypass -WindowStyle Maximized -WorkingDirectory ~ -NoExit -NoProfile -Command " '"' ". '\\domgen.corp\global\Users\Brighton\madziap\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'" '"')
 
 goToDesktopNumCreateIfNotExists(num) {
     count := VD.getCount()
@@ -41,11 +42,13 @@ goToDesktopNumCreateIfNotExists(num) {
 }
 
 displayDesktopInfo() {
-    count := VD.getCount()
-    current := VD.getCurrentDesktopNum()
-    msg := "Desktop: " current " / " count
-    ToolTip msg, A_ScreenWidth - 250, A_ScreenHeight - 150
-    SetTimer () => ToolTip(), -2300
+    if (A_ComputerName = "AMSWUATSHP011") {
+        count := VD.getCount()
+        current := VD.getCurrentDesktopNum()
+        msg := "Desktop: " current " / " count
+        ToolTip msg, A_ScreenWidth / 2 - 50, A_ScreenHeight - 150
+        SetTimer () => ToolTip(), -2300
+    }
 }
 
 closeDesktopsToTheRight() {
@@ -62,8 +65,15 @@ closeDesktopsToTheRight() {
 
 ^#t::
 {
-    termpath := '"' . localappdata . "\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe" . '"'
-    Run termpath, , "Max"
+    if (A_ComputerName = "AMSWUATSHP011") {
+        Run (
+            "C:\Program Files\PowerShell\7\pwsh.exe -ExecutionPolicy Bypass -WindowStyle Maximized -WorkingDirectory ~ -NoExit -NoProfile -Command " '"' ". '\\domgen.corp\global\Users\Brighton\madziap\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'" '"'
+        )
+    } else {
+        termpath := '"' . localappdata . "\Microsoft\WindowsApps\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\wt.exe" .
+            '"'
+        Run termpath, , "Max"
+    }
 }
 
 ;#useful stuff
