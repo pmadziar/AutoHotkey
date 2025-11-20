@@ -26,6 +26,10 @@ localappdata := EnvGet("LOCALAPPDATA")
 ^#c:: Run ('"' localappdata "\Programs\Microsoft VS Code\Code.exe" '"')
 ^#v:: Run ("C:\Program Files\Microsoft Visual Studio\18\Insiders\Common7\IDE\devenv.exe")
 ; ^#p:: Run ("C:\Program Files\PowerShell\7\pwsh.exe -ExecutionPolicy Bypass -WindowStyle Maximized -WorkingDirectory ~ -NoExit -NoProfile -Command " '"' ". '\\domgen.corp\global\Users\Brighton\madziap\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'" '"')
+^#b:: Run ('"' localappdata "\Google\Chrome\Application\chrome.exe" '"')
+
+;C:\Users\pawel\AppData\Local\Google\Chrome\Application\chrome.exe
+
 
 goToDesktopNumCreateIfNotExists(num) {
     count := VD.getCount()
