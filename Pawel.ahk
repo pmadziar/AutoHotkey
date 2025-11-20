@@ -47,13 +47,18 @@ goToDesktopNumCreateIfNotExists(num) {
 
 displayDesktopInfo() {
     if (A_ComputerName = "AMSWUATSHP011") {
-        count := VD.getCount()
-        current := VD.getCurrentDesktopNum()
-        msg := "Desktop: " current " / " count
-        ToolTip msg, A_ScreenWidth / 2 - 50, A_ScreenHeight - 150
-        SetTimer () => ToolTip(), -2300
+		displayDesktopInfoAlways()		
     }
 }
+
+displayDesktopInfoAlways() {
+	count := VD.getCount()
+	current := VD.getCurrentDesktopNum()
+	msg := "Desktop: " current " / " count
+	ToolTip msg, A_ScreenWidth / 2 - 50, A_ScreenHeight - 150
+	SetTimer () => ToolTip(), -2300
+}
+
 
 closeDesktopsToTheRight() {
     count := VD.getCount()
@@ -93,6 +98,10 @@ closeDesktopsToTheRight() {
 
 ; close desktops to the right of the current one
 ^#0:: closeDesktopsToTheRight()
+
+; display desktop info
+^#i:: displayDesktopInfoAlways()
+
 
 ; wrapping / cycle back to first desktop when at the last
 ^#left:: {
